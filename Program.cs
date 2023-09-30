@@ -17,7 +17,7 @@ if (File.Exists(args[0] + "/info.json"))
         {
             if (!path.Name.EndsWith(".zip") && !path.FullName.Contains(".git") && !path.Name.EndsWith(".bat") && !path.FullName.Contains(".vscode"))
             {
-                archive.CreateEntryFromFile(path.FullName, directory.Name + "\\" + path.FullName.Replace(directory.FullName + "\\", ""));
+                archive.CreateEntryFromFile(path.FullName.Replace("\\", "/"), (directory.Name + "\\" + path.FullName.Replace(directory.FullName + "\\", "")).Replace("\\", "/"));
             }
         }
     }
