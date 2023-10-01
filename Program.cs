@@ -6,7 +6,8 @@ if (File.Exists(args[0] + "/info.json"))
 {
     var directory = new DirectoryInfo(args[0]);
     var info = JsonObject.Parse(File.ReadAllText(directory + "/info.json"));
-    var outputName = directory.Name + "_" + info["version"] + ".zip";
+    var outputNameLessExtension = directory.Name + "_" + info["version"];
+    var outputName = outputNameLessExtension + ".zip";
     var outputPath = directory + "/" + outputName;
     
     File.Delete(outputPath);
@@ -22,5 +23,13 @@ if (File.Exists(args[0] + "/info.json"))
         }
     }
 
+    foreach (var file in Directory.GetFiles(args[1]))
+    {
+        if (file.Contains(directory.Name + "_"))
+        {
+            File.Delete(file);
+        }
+    }
+    
     File.Copy(outputPath, args[1] + "/" + outputName, true);
 }
